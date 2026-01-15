@@ -1,0 +1,73 @@
+# Prometheus configuration for HPC Cryptominer
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # HPC Miner metrics
+  - job_name: 'hpc-miner'
+    static_configs:
+      - targets: ['hpc-miner:8082']
+    scrape_interval: 10s
+    metrics_path: /metrics
+
+  # Cluster master metrics
+  - job_name: 'cluster-master'
+    static_configs:
+      - targets: ['cluster-master:8082']
+    scrape_interval: 10s
+    metrics_path: /metrics
+
+  # Cluster nodes metrics
+  - job_name: 'cluster-nodes'
+    dns_sd_configs:
+      - names:
+          - 'cluster-node'
+        type: 'A'
+        port: 8082
+    scrape_interval: 10s
+    metrics_path: /metrics
+
+  # System metrics (node_exporter if installed)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+    scrape_interval: 30s
+
+  # GPU metrics (nvidia_gpu_exporter if installed)
+  - job_name: 'gpu-exporter'
+    static_configs:
+      - targets: ['localhost:9445']
+    scrape_interval: 10s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Sample alerting rules
+# groups:
+#   - name: mining.rules
+#     rules:
+#     - alert: HighRejectionRate
+#       expr: mining_rejected_shares_total / mining_accepted_shares_total > 0.1
+#       for: 5m
+#       labels:
+#         severity: warning
+#       annotations:
+#         summary: High share rejection rate detected
+#         description: "Share rejection rate is {{ $value }}% for the last 5 minutes"
+#     
+#     - alert: LowHashrate
+#       expr: mining_hashrate_hash_per_second < 1000
+#       for: 10m
+#       labels:
+#         severity: critical
+#       annotations:
+#         summary: Mining hashrate is critically low
+#         description: "Hashrate has been below 1000 H/s for more than 10 minutes"

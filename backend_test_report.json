@@ -1,0 +1,180 @@
+{
+  "summary": {
+    "total_tests": 28,
+    "passed_tests": 28,
+    "failed_tests": 0,
+    "success_rate": 100.0
+  },
+  "results": [
+    {
+      "test": "API Connectivity",
+      "success": true,
+      "details": "Base URL accessible, Status: 200",
+      "timestamp": "2025-09-13T01:18:38.306134"
+    },
+    {
+      "test": "Root Endpoint",
+      "success": true,
+      "details": "Status: 200, Mining Available: False",
+      "timestamp": "2025-09-13T01:18:38.356848"
+    },
+    {
+      "test": "Mining Status",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Mining engine not available",
+      "timestamp": "2025-09-13T01:18:38.415746"
+    },
+    {
+      "test": "Mining Stats",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:38.473423"
+    },
+    {
+      "test": "Mining Algorithms",
+      "success": true,
+      "details": "Retrieved 0 algorithms",
+      "timestamp": "2025-09-13T01:18:38.528718"
+    },
+    {
+      "test": "Mining Hardware",
+      "success": true,
+      "details": "Hardware info retrieved",
+      "timestamp": "2025-09-13T01:18:38.582157"
+    },
+    {
+      "test": "Mining Config",
+      "success": true,
+      "details": "Config retrieved",
+      "timestamp": "2025-09-13T01:18:38.636954"
+    },
+    {
+      "test": "Mining Start",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:38.692875"
+    },
+    {
+      "test": "Mining Stop",
+      "success": true,
+      "details": "Stop command accepted: Mining not running",
+      "timestamp": "2025-09-13T01:18:38.753380"
+    },
+    {
+      "test": "Mining Optimize",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:38.809967"
+    },
+    {
+      "test": "Cluster Status",
+      "success": true,
+      "details": "Cluster unavailable (expected): Mining engine not available",
+      "timestamp": "2025-09-13T01:18:38.863613"
+    },
+    {
+      "test": "Cluster Nodes",
+      "success": true,
+      "details": "Retrieved 0 nodes, 0 active",
+      "timestamp": "2025-09-13T01:18:38.919099"
+    },
+    {
+      "test": "Cluster Node Registration",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:38.975795"
+    },
+    {
+      "test": "Cluster Optimization",
+      "success": true,
+      "details": "Retrieved 0 recommendations",
+      "timestamp": "2025-09-13T01:18:39.229026"
+    },
+    {
+      "test": "GPU Optimization Status",
+      "success": true,
+      "details": "GPU optimization unavailable (expected): Mining engine not available",
+      "timestamp": "2025-09-13T01:18:39.287374"
+    },
+    {
+      "test": "GPU Optimization - Ethash",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.341370"
+    },
+    {
+      "test": "GPU Optimization - RandomX",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.395412"
+    },
+    {
+      "test": "GPU Optimization - SHA256",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.449181"
+    },
+    {
+      "test": "GPU Optimization - Kawpow",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.501672"
+    },
+    {
+      "test": "GPU Optimization - X11",
+      "success": true,
+      "details": "Mining engine unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.556999"
+    },
+    {
+      "test": "GPU Performance Monitoring",
+      "success": true,
+      "details": "GPU optimizer unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.609090"
+    },
+    {
+      "test": "Network Optimization Status",
+      "success": true,
+      "details": "Network optimization unavailable (expected): Mining engine not available",
+      "timestamp": "2025-09-13T01:18:39.659873"
+    },
+    {
+      "test": "Network Performance Monitoring",
+      "success": true,
+      "details": "Network optimizer unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.712836"
+    },
+    {
+      "test": "AI Performance Analysis",
+      "success": true,
+      "details": "AI optimization unavailable (expected): Mining engine not available",
+      "timestamp": "2025-09-13T01:18:39.763029"
+    },
+    {
+      "test": "AI Optimization Apply",
+      "success": true,
+      "details": "AI optimizer unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.820422"
+    },
+    {
+      "test": "Comprehensive Analytics",
+      "success": true,
+      "details": "Analytics unavailable (expected): Mining engine not available",
+      "timestamp": "2025-09-13T01:18:39.874480"
+    },
+    {
+      "test": "Algorithm Benchmarks",
+      "success": true,
+      "details": "Advanced analytics unavailable (expected): Status 503",
+      "timestamp": "2025-09-13T01:18:39.928702"
+    },
+    {
+      "test": "Profitability Analysis",
+      "success": true,
+      "details": "Profitability analysis unavailable (expected): AI optimizer not available",
+      "timestamp": "2025-09-13T01:18:39.983580"
+    }
+  ],
+  "failed_tests": [],
+  "api_url": "https://gpuharvest.preview.emergentagent.com/api"
+}

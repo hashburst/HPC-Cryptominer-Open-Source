@@ -1,0 +1,105 @@
+{
+  "mining": {
+    "algorithms": [
+      "SHA256",
+      "RandomX",
+      "Ethash",
+      "Scrypt",
+      "Yescrypt",
+      "Kawpow",
+      "X11"
+    ],
+    "auto_start": true,
+    "auto_switch": true,
+    "target_rejection_rate": 0.01,
+    "preferred_algorithm": "auto"
+  },
+  "pools": {
+    "nicehash_sha256": {
+      "name": "NiceHash SHA256",
+      "url": "stratum+tcp://sha256.nicehash.com:3334",
+      "username": "<MINING_WALLET_ADDRESS>",
+      "password": "x",
+      "algorithm": "SHA256",
+      "priority": 1
+    },
+    "nicehash_randomx": {
+      "name": "NiceHash RandomX",
+      "url": "stratum+tcp://randomx.nicehash.com:3380",
+      "username": "<MINING_WALLET_ADDRESS>",
+      "password": "x",
+      "algorithm": "RandomX",
+      "priority": 2
+    },
+    "nicehash_ethash": {
+      "name": "NiceHash Ethash",
+      "url": "stratum+tcp://daggerhashimoto.nicehash.com:3353",
+      "username": "<MINING_WALLET_ADDRESS>",
+      "password": "x",
+      "algorithm": "Ethash",
+      "priority": 3
+    }
+  },
+  "hardware": {
+    "cpu_threads": 4,
+    "gpu_intensity": 80,
+    "temperature_limit": 85,
+    "power_limit": 0,
+    "detected_cpu_cores": 8,
+    "detected_cpu_threads": 8,
+    "detected_gpus": 0,
+    "memory_allocation": "auto"
+  },
+  "optimization": {
+    "enable_ai": true,
+    "learning_rate": 0.1,
+    "optimization_interval": 300,
+    "work_segmentation": false,
+    "auto_pool_switch": true,
+    "rejection_threshold": 0.05,
+    "performance_monitoring": true
+  },
+  "cluster": {
+    "enable": false,
+    "master_url": "",
+    "node_port": 8080,
+    "heartbeat_interval": 30,
+    "mode": "standalone",
+    "auto_discovery": false
+  },
+  "monitoring": {
+    "enable_web_dashboard": true,
+    "dashboard_port": 8081,
+    "metrics_port": 8082,
+    "log_level": "INFO",
+    "log_file": "/app/logs/hpc_miner.log",
+    "enable_prometheus": true,
+    "stats_interval": 30
+  },
+  "integration": {
+    "hashburst_ai": true,
+    "nicehash_compatibility": true,
+    "prometheus_metrics": true,
+    "api_enabled": true,
+    "webhook_notifications": false
+  },
+  "security": {
+    "api_key": "",
+    "ssl_enabled": false,
+    "ssl_cert_path": "",
+    "ssl_key_path": "",
+    "allowed_ips": [
+      "127.0.0.1",
+      "localhost"
+    ]
+  },
+  "advanced": {
+    "thread_affinity": false,
+    "cpu_priority": "normal",
+    "gpu_compute_mode": "auto",
+    "memory_pool_size": "small",
+    "work_queue_size": 100,
+    "connection_timeout": 30,
+    "retry_attempts": 3
+  }
+}

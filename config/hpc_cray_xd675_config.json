@@ -1,0 +1,255 @@
+{
+  "mining": {
+    "algorithms": ["Ethash", "Kawpow", "RandomX", "SHA256", "X11", "Scrypt", "Yescrypt"],
+    "auto_start": true,
+    "auto_switch": true,
+    "preferred_algorithm": "Ethash",
+    "target_rejection_rate": 0.005,
+    "algorithm_priority": {
+      "Ethash": 1,
+      "Kawpow": 2,
+      "RandomX": 3,
+      "X11": 4,
+      "SHA256": 5,
+      "Scrypt": 6,
+      "Yescrypt": 7
+    }
+  },
+  "pools": {
+    "nicehash_ethash": {
+      "name": "NiceHash Ethash",
+      "url": "stratum+tcp://daggerhashimoto.nicehash.com:3353",
+      "backup_url": "stratum+tcp://daggerhashimoto.usa.nicehash.com:3353",
+      "username": "YOUR_BITCOIN_ADDRESS",
+      "password": "x",
+      "algorithm": "Ethash",
+      "priority": 1,
+      "fee": 0.02,
+      "min_difficulty": 4000000000,
+      "worker_name": "HPE_CRAY_XD675"
+    },
+    "nicehash_kawpow": {
+      "name": "NiceHash Kawpow",
+      "url": "stratum+tcp://kawpow.nicehash.com:3385",
+      "backup_url": "stratum+tcp://kawpow.usa.nicehash.com:3385",
+      "username": "YOUR_BITCOIN_ADDRESS",
+      "password": "x",
+      "algorithm": "Kawpow",
+      "priority": 2,
+      "fee": 0.02,
+      "worker_name": "HPE_CRAY_XD675"
+    },
+    "nanopool_etc": {
+      "name": "Nanopool Ethereum Classic",
+      "url": "stratum+tcp://etc-us-east1.nanopool.org:19999",
+      "backup_url": "stratum+tcp://etc-us-west1.nanopool.org:19999",
+      "username": "YOUR_ETC_ADDRESS",
+      "password": "x",
+      "algorithm": "Ethash",
+      "priority": 3,
+      "fee": 0.01,
+      "worker_name": "HPE_CRAY_XD675"
+    },
+    "zpool_multi": {
+      "name": "ZPool Multi-Algorithm",
+      "url": "stratum+tcp://mine.zpool.ca:4553",
+      "backup_url": "stratum+tcp://na.mine.zpool.ca:4553",
+      "username": "YOUR_BITCOIN_ADDRESS",
+      "password": "c=BTC,mc=RVN,ID=HPE_CRAY_XD675",
+      "algorithm": "X11",
+      "priority": 4,
+      "fee": 0.02,
+      "auto_switch": true
+    },
+    "viabtc_etc": {
+      "name": "ViaBTC Ethereum Classic",
+      "url": "stratum+tcp://etc.viabtc.com:8118",
+      "backup_url": "stratum+tcp://etc.viabtc.io:8118",
+      "username": "YOUR_ETC_ADDRESS.HPE_CRAY_XD675",
+      "password": "x",
+      "algorithm": "Ethash",
+      "priority": 5,
+      "fee": 0.01
+    },
+    "neopool_kawpow": {
+      "name": "NeoPool Kawpow",
+      "url": "stratum+tcp://kawpow.neopool.org:4501",
+      "backup_url": "stratum+tcp://us.kawpow.neopool.org:4501",
+      "username": "YOUR_RVN_ADDRESS",
+      "password": "x",
+      "algorithm": "Kawpow",
+      "priority": 6,
+      "fee": 0.015,
+      "worker_name": "HPE_CRAY_XD675"
+    },
+    "zergpool_multi": {
+      "name": "ZergPool Multi-Algorithm",
+      "url": "stratum+tcp://mine.zergpool.com:4553",
+      "backup_url": "stratum+tcp://us.mine.zergpool.com:4553",
+      "username": "YOUR_BITCOIN_ADDRESS",
+      "password": "c=BTC,mc=RVN,ID=HPE_CRAY_XD675",
+      "algorithm": "X11",
+      "priority": 7,
+      "fee": 0.005,
+      "auto_switch": true
+    },
+    "2miners_etc": {
+      "name": "2Miners Ethereum Classic",
+      "url": "stratum+tcp://etc.2miners.com:1010",
+      "backup_url": "stratum+tcp://us-etc.2miners.com:1010",
+      "username": "YOUR_ETC_ADDRESS",
+      "password": "x",
+      "algorithm": "Ethash",
+      "priority": 8,
+      "fee": 0.01,
+      "worker_name": "HPE_CRAY_XD675"
+    },
+    "f2pool_etc": {
+      "name": "F2Pool Ethereum Classic",
+      "url": "stratum+tcp://etc.f2pool.com:8118",
+      "backup_url": "stratum+tcp://etc-backup.f2pool.com:8118",
+      "username": "YOUR_ETC_ADDRESS.HPE_CRAY_XD675",
+      "password": "x",
+      "algorithm": "Ethash",
+      "priority": 9,
+      "fee": 0.025
+    }
+  },
+  "hardware": {
+    "detected_cpu_cores": 128,
+    "detected_cpu_threads": 256,
+    "detected_gpus": 8,
+    "cpu_threads": 64,
+    "gpu_intensity": 95,
+    "temperature_limit": 90,
+    "power_limit": 0,
+    "memory_allocation": "large",
+    "gpu_memory_allocation": "max",
+    "rocm_optimization": true,
+    "mi300_specific": {
+      "compute_units": 304,
+      "memory_bandwidth": "5.3TB/s",
+      "hbm3_memory": "128GB",
+      "optimal_workgroup_size": 256,
+      "preferred_algorithms": ["Ethash", "Kawpow", "RandomX"]
+    }
+  },
+  "optimization": {
+    "enable_ai": true,
+    "learning_rate": 0.05,
+    "optimization_interval": 180,
+    "work_segmentation": true,
+    "auto_pool_switch": true,
+    "rejection_threshold": 0.005,
+    "performance_monitoring": true,
+    "mi300_optimizations": {
+      "memory_timing": "aggressive",
+      "power_management": "performance",
+      "thermal_throttling": false,
+      "workload_balancing": true
+    },
+    "profitability_switching": {
+      "enabled": true,
+      "check_interval": 300,
+      "min_profit_difference": 0.05,
+      "stability_period": 600
+    }
+  },
+  "cluster": {
+    "enable": true,
+    "mode": "master",
+    "master_url": "",
+    "node_port": 8080,
+    "heartbeat_interval": 15,
+    "auto_discovery": false,
+    "load_balancing": "gpu_memory_based"
+  },
+  "monitoring": {
+    "enable_web_dashboard": true,
+    "dashboard_port": 8081,
+    "metrics_port": 8082,
+    "log_level": "INFO",
+    "log_file": "/var/log/hpc_miner.log",
+    "enable_prometheus": true,
+    "stats_interval": 15,
+    "temperature_alerts": true,
+    "hashrate_alerts": true,
+    "profit_tracking": true
+  },
+  "integration": {
+    "hashburst_ai": true,
+    "nicehash_compatibility": true,
+    "prometheus_metrics": true,
+    "api_enabled": true,
+    "webhook_notifications": true,
+    "discord_notifications": false,
+    "telegram_notifications": false
+  },
+  "security": {
+    "api_key": "YOUR_SECURE_API_KEY",
+    "ssl_enabled": false,
+    "ssl_cert_path": "",
+    "ssl_key_path": "",
+    "allowed_ips": ["127.0.0.1", "10.0.0.0/8", "192.168.0.0/16"]
+  },
+  "advanced": {
+    "thread_affinity": true,
+    "cpu_priority": "high",
+    "gpu_compute_mode": "rocm",
+    "memory_pool_size": "large",
+    "work_queue_size": 500,
+    "connection_timeout": 30,
+    "retry_attempts": 5,
+    "rocm_settings": {
+      "hip_visible_devices": "0,1,2,3,4,5,6,7",
+      "rocm_smi_lib": "/opt/rocm/lib",
+      "amdgpu_targets": "gfx942"
+    },
+    "performance_tuning": {
+      "huge_pages": true,
+      "cpu_governor": "performance",
+      "numa_optimization": true,
+      "irq_affinity": true
+    }
+  },
+  "algorithm_specific": {
+    "Ethash": {
+      "dag_size_limit": "4GB",
+      "epoch_change_handling": "precompute",
+      "memory_optimization": "hbm3_optimized",
+      "expected_hashrate_per_gpu": "2.5GH/s"
+    },
+    "Kawpow": {
+      "dag_size_limit": "2GB", 
+      "memory_optimization": "bandwidth_optimized",
+      "expected_hashrate_per_gpu": "120MH/s"
+    },
+    "RandomX": {
+      "huge_pages": true,
+      "threads_per_gpu": 32,
+      "memory_per_thread": "2GB",
+      "expected_hashrate_per_gpu": "15KH/s"
+    },
+    "X11": {
+      "intensity": 22,
+      "worksize": 256,
+      "expected_hashrate_per_gpu": "45GH/s"
+    },
+    "SHA256": {
+      "intensity": 25,
+      "worksize": 256,
+      "expected_hashrate_per_gpu": "8TH/s"
+    },
+    "Scrypt": {
+      "intensity": 20,
+      "worksize": 256,
+      "lookup_gap": 2,
+      "expected_hashrate_per_gpu": "2.8GH/s"
+    },
+    "Yescrypt": {
+      "intensity": 18,
+      "worksize": 256,
+      "expected_hashrate_per_gpu": "8.5KH/s"
+    }
+  }
+}

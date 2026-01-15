@@ -1,0 +1,93 @@
+# Podman Compose for HPC Cryptominer (RHEL 10)
+version: '3.8'
+
+services:
+  # Standalone miner
+  hpc-miner:
+    build:
+      context: ../..
+      dockerfile: containers/podman/Containerfile.rhel
+    container_name: hpc-miner-rhel
+    restart: unless-stopped
+    environment:
+      - MINING_MODE=standalone
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8080:8080"  # Node API
+      - "8081:8081"  # Dashboard
+      - "8082:8082"  # Metrics
+    volumes:
+      - ./logs:/app/logs:Z
+      - ./config:/app/config:Z
+      - ./data:/app/data:Z
+    networks:
+      - mining-net
+    security_opt:
+      - label:type:container_runtime_t
+    devices:
+      - /dev/nvidiactl
+      - /dev/nvidia-uvm
+      - /dev/nvidia0
+      - /dev/nvidia1
+    logging:
+      driver: "journald"
+
+  # Cluster master
+  cluster-master:
+    build:
+      context: ../..
+      dockerfile: containers/podman/Containerfile.rhel
+    container_name: hpc-cluster-master-rhel
+    restart: unless-stopped
+    environment:
+      - MINING_MODE=cluster
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8080:8080"  # Cluster API
+      - "8081:8081"  # Dashboard
+      - "8082:8082"  # Metrics
+    volumes:
+      - ./logs:/app/logs:Z
+      - ./config:/app/config:Z
+      - ./data:/app/data:Z
+    networks:
+      - mining-net
+    security_opt:
+      - label:type:container_runtime_t
+    profiles:
+      - cluster
+
+  # Cluster node
+  cluster-node:
+    build:
+      context: ../..
+      dockerfile: containers/podman/Containerfile.rhel
+    restart: unless-stopped
+    environment:
+      - MINING_MODE=node
+      - CLUSTER_MASTER=http://cluster-master:8080
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./logs:/app/logs:Z
+      - ./config:/app/config:Z
+    networks:
+      - mining-net
+    security_opt:
+      - label:type:container_runtime_t
+    devices:
+      - /dev/nvidiactl
+      - /dev/nvidia-uvm
+      - /dev/nvidia0
+      - /dev/nvidia1
+    profiles:
+      - cluster
+    depends_on:
+      - cluster-master
+
+networks:
+  mining-net:
+    driver: bridge
+
+# Note: For Podman on RHEL, use:
+# podman-compose up --profile standalone  # For standalone mode
+# podman-compose up --profile cluster     # For cluster mode

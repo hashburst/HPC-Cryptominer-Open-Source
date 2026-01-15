@@ -1,0 +1,149 @@
+# Docker Compose for HPC Cryptominer
+version: '3.8'
+
+services:
+  # Standalone miner
+  hpc-miner:
+    build:
+      context: ../..
+      dockerfile: containers/docker/Dockerfile.ubuntu
+    container_name: hpc-miner
+    restart: unless-stopped
+    environment:
+      - MINING_MODE=standalone
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8080:8080"  # Node API
+      - "8081:8081"  # Dashboard
+      - "8082:8082"  # Metrics
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./data:/app/data
+    networks:
+      - mining-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # Cluster master
+  cluster-master:
+    build:
+      context: ../..
+      dockerfile: containers/docker/Dockerfile.ubuntu
+    container_name: hpc-cluster-master
+    restart: unless-stopped
+    environment:
+      - MINING_MODE=cluster
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8080:8080"  # Cluster API
+      - "8081:8081"  # Dashboard
+      - "8082:8082"  # Metrics
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./data:/app/data
+    networks:
+      - mining-net
+    profiles:
+      - cluster
+
+  # Cluster node
+  cluster-node:
+    build:
+      context: ../..
+      dockerfile: containers/docker/Dockerfile.ubuntu
+    restart: unless-stopped
+    environment:
+      - MINING_MODE=node
+      - CLUSTER_MASTER=http://cluster-master:8080
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config
+    networks:
+      - mining-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+      replicas: 2
+    profiles:
+      - cluster
+    depends_on:
+      - cluster-master
+
+  # Monitoring (Prometheus)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: hpc-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - mining-net
+    profiles:
+      - monitoring
+
+  # Grafana Dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: hpc-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana-dashboards:/etc/grafana/provisioning/dashboards
+    networks:
+      - mining-net
+    profiles:
+      - monitoring
+    depends_on:
+      - prometheus
+
+  # Redis (for cluster coordination)
+  redis:
+    image: redis:alpine
+    container_name: hpc-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - mining-net
+    profiles:
+      - cluster
+
+networks:
+  mining-net:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  redis_data:

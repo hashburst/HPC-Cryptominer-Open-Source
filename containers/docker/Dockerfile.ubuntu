@@ -1,0 +1,101 @@
+# HPC Cryptominer for Ubuntu 24.04
+FROM ubuntu:24.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+LABEL maintainer="HPC Mining Team"
+LABEL version="1.0.0"
+LABEL description="Advanced HPC Cryptominer with AI Optimization"
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    build-essential \
+    cmake \
+    git \
+    wget \
+    curl \
+    htop \
+    vim \
+    supervisor \
+    # GPU support
+    ocl-icd-opencl-dev \
+    opencl-headers \
+    clinfo \
+    # Monitoring tools
+    lm-sensors \
+    nvidia-smi || true \
+    # Networking
+    net-tools \
+    iputils-ping \
+    # Clean up
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install NVIDIA Container Toolkit if available
+RUN wget -qO - https://nvidia.github.io/libnvidia-container/gpgkey | apt-key add - && \
+    echo "deb https://nvidia.github.io/libnvidia-container/ubuntu24.04/$(ARCH) /" > /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+    apt-get update && apt-get install -y nvidia-container-toolkit || true && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install AMD ROCm if available
+RUN wget -qO - https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
+    echo "deb [arch=amd64] https://repo.radeon.com/rocm/apt/6.0/ jammy main" > /etc/apt/sources.list.d/rocm.list && \
+    apt-get update && apt-get install -y rocm-dev rocm-libs rocm-utils || true && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Create mining user
+RUN useradd -m -s /bin/bash miner && \
+    usermod -aG sudo miner
+
+# Set working directory
+WORKDIR /app
+
+# Copy application files
+COPY . /app/
+RUN chown -R miner:miner /app
+
+# Install Python dependencies
+COPY requirements.txt /app/
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Install additional mining libraries
+RUN pip3 install --no-cache-dir \
+    numpy \
+    scipy \
+    scikit-learn \
+    tensorflow-cpu \
+    torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu \
+    asyncio-mqtt \
+    aioredis \
+    prometheus-client
+
+# Create necessary directories
+RUN mkdir -p /app/logs /app/data /app/config && \
+    chown -R miner:miner /app/logs /app/data /app/config
+
+# Copy supervisor configuration
+COPY containers/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy entrypoint script
+COPY containers/docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Expose ports
+EXPOSE 8080 8081 8082
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Switch to mining user
+USER miner
+
+# Set entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
