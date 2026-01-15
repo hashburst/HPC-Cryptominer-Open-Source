@@ -1,5 +1,5 @@
 #====================================================================================================
-# #### START - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
+#### START - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
 #====================================================================================================
 
  THIS SECTION CONTAINS CRITICAL TESTING INSTRUCTIONS FOR BOTH AGENTS
@@ -93,11 +93,11 @@
  IMPORTANT: Main agent must ALWAYS update test_result.md BEFORE calling the testing agent, as it relies on this file to understand what to test next.
 
 #====================================================================================================
-# END - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
+#### END - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
 #====================================================================================================
 
 #====================================================================================================
-# Testing Data - Main Agent and testing sub agent both should log testing data below this section
+#### Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
 user_problem_statement: "Complete Phases 8 & 9: Advanced Performance Optimization for HPC Cryptominer. Phase 8 focuses on GPU and Network Tuning with AMD MI300 optimization, ROCm settings, zero rejected shares, and share submission speed. Phase 9 focuses on AI-powered performance optimization, real-time analysis, predictive optimization, dynamic algorithm switching, and high-verbose performance analytics for maximum profitability on HPE CRAY XD675."
