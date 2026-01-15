@@ -1,19 +1,19 @@
-#====================================================================================================
-# START - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
-#====================================================================================================
+====================================================================================================
+ START - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
+====================================================================================================
 
-# THIS SECTION CONTAINS CRITICAL TESTING INSTRUCTIONS FOR BOTH AGENTS
-# BOTH MAIN_AGENT AND TESTING_AGENT MUST PRESERVE THIS ENTIRE BLOCK
+ THIS SECTION CONTAINS CRITICAL TESTING INSTRUCTIONS FOR BOTH AGENTS
+ BOTH MAIN_AGENT AND TESTING_AGENT MUST PRESERVE THIS ENTIRE BLOCK
 
-# Communication Protocol:
-# If the `testing_agent` is available, main agent should delegate all testing tasks to it.
-#
-# You have access to a file called `test_result.md`. This file contains the complete testing state
-# and history, and is the primary means of communication between main and the testing agent.
-#
-# Main and testing agents must follow this exact format to maintain testing data. 
-# The testing data must be entered in yaml format Below is the data structure:
-# 
+ Communication Protocol:
+ If the `testing_agent` is available, main agent should delegate all testing tasks to it.
+
+ You have access to a file called `test_result.md`. This file contains the complete testing state
+ and history, and is the primary means of communication between main and the testing agent.
+
+ Main and testing agents must follow this exact format to maintain testing data. 
+ The testing data must be entered in yaml format Below is the data structure:
+ 
 ## user_problem_statement: {problem_statement}
 ## backend:
 ##   - task: "Task name"
